@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding NMR Spectroscopy · 精读版</title>
+<meta name="description" content="Understanding NMR Spectroscopy (James Keeler, 2nd ed.) 本地精读阅读器：进度、书签、笔记与索引。">
+<link rel="stylesheet" href="app.css">
+<script>
+  /* 首屏前应用主题，避免闪白 */
+  (function () {
+    try {
+      var ui = JSON.parse(localStorage.getItem('nmr.reader.ui.v2') || '{}');
+      if (ui.theme) document.documentElement.dataset.theme = ui.theme;
+      else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.dataset.theme = 'dark';
+      }
+      if (localStorage.getItem('nmr.reader.state.v2')) { /* 有本地数据 */ }
+    } catch (e) { }
+  })();
+</script>
+</head>
+<body>
+
+<div id="app">
+  <header>
+    <div id="hdr-progress"></div>
+    <button class="ibtn" id="burger" title="目录" aria-label="目录"></button>
+
+    <div class="brand">
+      <span class="glyph">NMR</span>
+      <span class="tx"><strong id="b-title">Understanding NMR Spectroscopy</strong>
+      <small id="b-sub">James Keeler · 2nd ed.</small></span>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="search">
+      <span class="ico">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/>
+        <path d="M20 20l-3.5-3.5"/></svg>
+      </span>
+      <input id="q" type="search" placeholder="全文检索（/ 聚焦，↑↓ 选择，Enter 跳转）"
+             autocomplete="off" spellcheck="false" aria-label="全文检索">
+      <kbd>/</kbd>
+      <div id="results" role="listbox"></div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="ring" id="ring" title="学习进度" role="button" tabindex="0">
+      <svg width="30" height="30" viewBox="0 0 36 36" aria-hidden="true">
+        <circle class="track" cx="18" cy="18" r="15" fill="none" stroke-width="3"></circle>
+        <circle class="bar" id="ring-bar" cx="18" cy="18" r="15" fill="none" stroke-width="3"
+                stroke-linecap="round" stroke-dasharray="94.25" stroke-dashoffset="94.25"
+                transform="rotate(-90 18 18)"></circle>
+      </svg>
+      <span class="val"><b id="ring-pct">0%</b>已读</span>
+    </div>
+
+    <button class="ibtn" id="btn-bm" title="添加书签（B）" aria-label="书签"></button>
+    <button class="ibtn" id="btn-note" title="笔记（N）" aria-label="笔记"></button>
+    <button class="ibtn" id="btn-theme" title="切换主题（T）" aria-label="切换主题"></button>
+  </header>
+
+  <div id="body">
+    <!-- 左：目录 / 索引 -->
+    <aside id="side">
+      <div class="tabs">
+        <button class="tab on" data-pane="toc">目录</button>
+        <button class="tab" data-pane="index">索引</button>
+      </div>
+
+      <div class="pane on" id="pane-toc">
+        <div id="toc-list" class="scroll"></div>
+      </div>
+
+      <div class="pane" id="pane-index">
+        <div class="idx-tools">
+          <input id="idx-q" type="search" placeholder="筛选术语 / 标题…" autocomplete="off" aria-label="筛选索引">
+          <div class="idx-modes" id="idx-modes">
+            <button data-mode="book" class="on">书后索引</button>
+            <button data-mode="head">标题索引</button>
+          </div>
+          <div class="letters" id="idx-letters"></div>
+        </div>
+        <div id="idx-list" class="scroll"></div>
+      </div>
+    </aside>
+
+    <!-- 中：正文 -->
+    <main id="doc" class="scroll">
+      <div id="chapter-bar"><span class="crumb" id="crumb"></span><span class="pos" id="pos">0% 已读</span></div>
+      <div id="doc-inner">
+        <article id="article"></article>
+        <div id="chap-foot"></div>
+      </div>
+      <div id="selbar" role="toolbar" aria-label="选中文字操作"></div>
+    </main>
+
+    <!-- 右：进度 / 书签 / 笔记 -->
+    <aside id="panel">
+      <div class="tabs">
+        <button class="tab on" data-pane="prog">进度</button>
+        <button class="tab" data-pane="bm">书签<span class="badge" id="bm-count2">0</span></button>
+        <button class="tab" data-pane="nt">笔记<span class="badge" id="nt-count2">0</span></button>
+      </div>
+      <div class="pane on" id="pane-prog"></div>
+      <div class="pane" id="pane-bm">
+        <div class="list scroll" id="bm-list"></div>
+        <div class="pane-foot"><button class="btn primary" data-act="add-bm">＋ 在当前位置加书签</button></div>
+      </div>
+      <div class="pane" id="pane-nt"><div class="list scroll" id="nt-list"></div></div>
+    </aside>
+  </div>
+</div>
+
+<div id="pager"></div>
+<div id="zoom"><img id="zoomi" alt="放大查看"></div>
+<div id="modal"></div>
+<div id="toasts"></div>
+<div id="boot"><div><div class="sp"></div>正在载入全书数据…</div></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

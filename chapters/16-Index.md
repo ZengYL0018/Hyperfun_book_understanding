@@ -1,0 +1,1263 @@
+# Index
+
+
+## Index
+
+
+## A
+
+
+## C
+
+
+## B
+
+  - in HSQC 211
+  - sequence 14
+- absolute value spectrum 235
+  - bulk magnetization
+- absorption mode lineshape 84
+  - at equilibrium 49
+- active coupling
+  - calculated from density operator 128
+  - in COSY cross peak 328
+  - origin of 47
+- active spin
+  - precession of 50
+  - in spectrum of two coupled spins 38
+  - related to ensemble average 112
+- ADC 489
+  - related to expectation values for individual spins 112
+  - digitization sidebands 490
+  - vector 48
+  - number of bits 489
+- analogue to digital converter see ADC
+- angular frequency 17
+  - conversion to Hz 17
+  - calibration of pulses 61
+- angular momentum
+  - chemical equivalence 446
+  - classical 29
+  - chemical exchange 286
+  - nuclear spin 29
+  - analogy for secular contribution to transverse relaxation
+- anti-phase magnetization 154
+  - 290
+  - coherence transfer using pulses 166
+  - fast and slow limits 289
+  - effect of heteronuclear decoupling 169
+  - microscopic view 287
+  - from evolution of coupling 150
+  - chemical shift
+  - in I<sub>n</sub>S spin system 453
+  - conversion to frequency 7
+  - in three-spin system 321
+  - ppm scale 6
+  - interconversion with in-phase using spin echo 163
+  - chemical shift anisotropy see CSA
+  - multiplet from 155
+  - circular motion 16
+- anti-phase square array
+  - described using complex exponential 20
+  - in COSY 194
+  - phase shift in 18
+  - in COSY cross peak of three-spin system 327
+  - coherence
+  - in description of reduced multiplet 333
+  - relation to superposition state 134
+- APT 457
+  - coherence order
+- attenuator 486
+  - definition of 382
+- axial peak
+  - effect of pulses 385
+  - moved using States–TPPI 233
+  - evolution of operators of particular order 384
+  - origin in NOESY 283
+  - in heteronuclear systems 388
+  - suppression in NOESY 283
+  - introduced 173
+  - suppression using phase cycling 403
+  - observable 386
+- axis system
+  - possible values 383
+  - right-handed 49
+  - relation to raising and lowering operators 174
+  - coherence transfer
+  - by pulses from anti-phase state 166
+  - in INEPT experiment 167
+- B<sub>1</sub> field see radiofrequency field
+  - coherence transfer pathway
+- Boltzmann distribution 115, 131, 259
+  - amplitude modulated data 390
+- bra 107
+  - cancellation of unwanted 397
+- broadband decoupling
+  - defined 387
+  - heating during 14
+  - in heteronuclear experiments 388
+  - in <sup>13</sup>C spectra 14
+  - P- and N-type data 390
+  - phase modulated data 390
+  - problems with 199
+  - relationship to frequency discrimination 389
+  - pulse sequence 191
+  - retaining symmetrical 390
+  - reduced multiplets 330
+  - selection using phase cycling 396
+  - selective version 171
+  - selection with field gradient pulses 412
+  - small flip angle 335
+- coil
+  - small flip angle, analysed using polarization operators 340
+  - in probe 485
+  - small flip angle, lineshape of cross peak 342
+  - used for detection 51
+  - small flip angle, lineshape of diagonal peak 343
+  - used to generate radiofrequency field 52
+  - small flip angle, problems with 344
+- combination line
+  - three-spin system 325
+  - in ABX spectrum 474
+  - two-dimensional 190
+  - in three-spin system 43
+  - coupling
+- complex conjugate 498
+  - constant 10
+- complex exponential 498
+  - effect on evolution of product operators 150
+  - relation to trigonometric functions 499
+  - not refocused by spin echo in homonuclear case 161
+- complex numbers 497
+  - refocused in heteronuclear spin echo 164
+  - complex conjugate 498
+  - sign of constant 12
+  - r/θ representation 498
+  - term in Hamiltonian 37
+  - square modulus 498
+  - virtual 475
+- constant time
+  - coupling constant
+  - COSY 354
+  - determination of relative signs using reduced multiplets 333
+  - COSY, intensity of cross and diagonal peaks 355
+  - effect of sign 39
+  - COSY, linewidth in ω<sub>1</sub> 356
+  - effect of sign on ABX spectrum 472
+  - HSQC 357
+  - measurement using reduced multiplet 334
+  - pulse sequence element 353
+  - sign of 12
+- correlation function
+  - cross correlation 306
+  - definition 253
+  - dependence of rate constant on geometry 307
+  - exemplified 254
+  - differential linebroadening 309
+  - exponential form 255
+  - effect on transverse relaxation 308
+  - reduced 255
+  - exploitation in TROSY 310
+  - relation to correlation time 255
+  - in <sup>15</sup>N–<sup>1</sup>H pair 306
+- correlation time
+  - in longitudinal relaxation 306
+  - definition 251
+  - Solomon equations in presence of 308
+  - relation to correlation function 255
+  - cross peak
+  - typical values 253
+  - form of multiplet for COSY of three spins 326
+- cosine modulation
+  - form of multiplet in constant time COSY 354
+  - in two-dimensional NMR 187
+  - form of multiplet in COSY 192
+  - lack of frequency discrimination 226
+  - form of multiplet in DQF COSY 201
+  - used in States–Haberkorn–Ruben method 230
+  - form of multiplet in small flip angle COSY 335
+- COSY
+  - form of multiplet in TOCSY 223
+  - analysis using product operators 190
+  - form of multiplet in ZCOSY 346
+  - anti-phase square array in 194
+  - in COSY 192
+  - constant time 354
+  - in NOESY 283
+  - constant time, analysis using product operators 354
+  - in small flip angle COSY, analysed using polarization
+  - constant time, intensity of cross and diagonal peaks 355
+  - operators 341
+  - constant time, lineshapes in 354
+  - influence of active and passive couplings on form of 328
+  - constant time, linewidth in ω<sub>1</sub> 356
+  - cross relaxation 270
+  - constant time, problems with 355
+  - in fast motion regime 273
+  - constant time, pulse sequence 354
+  - in slow motion regime 273
+  - cross peak 192
+  - transverse 297
+  - cross-peak multiplet in a three-spin system 326
+  - transverse, dependence on spectral densities 298
+  - detection of small couplings 198
+  - transverse, during spin locking 298
+  - diagonal peak 192
+  - zero crossing 273
+  - diagonal peak in small flip angle 336
+  - cryo probe 486
+  - double-quantum filtered 200
+  - CSA 250
+  - form of cross-peak multiplet 192
+  - cross correlation with dipolar relaxation 306
+  - form of diagonal-peak multiplet 195
+  - relaxation due to 304
+  - interpretation of 190
+  - tensor 304
+  - phase cycle 405
+  - phase properties 197
+  - CYCLOPS 403
+
+## D
+
+
+## E
+
+  - interpretation of spectrum 205
+  - phase cycle 406
+- dB 487
+  - pulse sequence 204
+  - relation to pulse width 488
+  - remote peaks 370
+- DC spike 403
+  - three-spin system 366
+- decoupling see broadband decoupling
+  - double-quantum transition
+- density operator 126
+  - in three-spin system 42
+  - at equilibrium 128, 131
+  - in two-spin system 39
+  - definition 127
+  - doubly anti-phase magnetization 321
+  - expansion coefficients 130
+  - generated in three-spin system 323
+  - expressed in terms of Î<sub>x</sub>, Î<sub>y</sub> and Î<sub>z</sub>129
+  - DPFGSE 433
+  - matrix representation 127
+  - in NOE experiment 433
+  - rotation of 141
+  - transient NOE spectrum of quinine 434
+  - time evolution 129
+  - DQF COSY
+- dephasing
+  - advantages over COSY 203
+  - due to inhomogeneous broadening 300
+  - analysis using product operators 200
+  - during field gradient pulse 415
+  - pathway selection with gradients 421
+- DEPT 462
+  - phase cycle 405
+- detection
+  - phase properties of cross and diagonal peaks 201
+  - in rotating frame 60
+  - pulse sequence 200
+  - of precessing magnetization 51
+  - dwell time 490
+- diagonal peak
+  - form of multiplet in constant time COSY 354
+  - form of multiplet in COSY 195
+  - form of multiplet in DQF COSY 201
+  - editing
+  - form of multiplet in small flip angle COSY 336
+  - using APT 457
+  - form of multiplet in TOCSY 223
+  - using DEPT 466
+  - form of multiplet in ZCOSY 346
+  - using INEPT 461
+  - in COSY 192
+  - effective field
+  - in NOESY 283
+  - for hard pulse 59
+  - lineshape in small flip angle COSY 343
+  - in frequency units 56
+- difference spectroscopy
+  - in rotating frame 55
+  - in HSQC 211
+  - tilt angle of 56
+  - in INEPT 170
+  - eigenfunction
+  - in NOE experiments 276, 279
+  - associated eigenvalue 28
+  - in selective COSY 172
+  - of Î<sub>z</sub> 29, 108
+- digitization
+  - of Hamiltonian for one spin 30
+  - of time domain 77
+  - of Hamiltonian for three coupled spins 41
+  - sampling rate 490
+  - of Hamiltonian for two coupled spins 37
+  - sidebands 490
+  - of Hamiltonian for two spins without coupling 35
+  - with ADC 489
+  - of operator 28
+- diplexer 488
+  - eigenvalue
+- dipolar relaxation
+  - associated with eigenfunction 28
+  - described using Solomon equations 271
+  - of Î<sub>z</sub> 29
+  - longitudinal relaxation for two spins 272
+  - of Hamiltonian for one spin 30
+  - of two spins 267
+  - relation to measurement 28
+  - transverse, for two spins 296
+  - eigenvalue equation 28
+- Dirac notation 107
+  - energy
+  - implied integration 107
+  - operator for 29
+- dispersion mode lineshape 84
+  - energy level
+- double-quantum coherence
+  - description of transition using 23
+  - diagrammatic representation of evolution 178
+  - in frequency units 33
+  - evolution of 176
+  - of AB spin system 443
+  - generation from anti-phase terms 176
+  - of three coupled spins 41
+  - representation using product operators 175
+  - of two coupled spins 38
+- double-quantum filtered COSY see DQF COSY
+  - of two spins without coupling 36
+- double-quantum spectroscopy 203
+  - problem with 24
+  - analysis using product operators 204
+  - energy level diagram
+  - direct peaks 367
+  - three coupled spins 41
+  - form of spectrum 205
+  - two coupled spins 37
+  - INADEQUATE experiment 206
+
+## F
+
+
+## G
+
+
+## H
+
+- ensemble average
+  - cosine 188
+  - calculation of bulk z-magnetization112
+  - how the transform works 78
+  - calculation of transverse magnetization 116
+  - mathematical formulation 80
+  - overbar notation 114
+  - of two-dimensional cosine modulated data 188
+- equilibrium magnetization
+  - of two-dimensional sine modulated data 189
+  - origin of 49
+  - sine 189
+  - value of 260
+  - free induction decay 13
+- equivalence
+  - description of decay during 83
+  - chemical 446
+  - due to precession of transverse magnetization 51
+  - magnetic 447
+  - representation as complex time-domain signal 82
+- exchange see chemical exchange
+  - frequency
+- exchange broadening 287
+  - angular 17
+- exchange narrowing 287
+  - conversion from Hz to angular 17
+- EXORCYCLE 402
+  - motion in a circle 17
+- expectation value 109
+  - offset 8
+  - of Î<sub>z</sub> 109
+  - offset in rotating frame 55
+  - evolution of ⟨Î<sub>x</sub>⟩ during a pulse 125
+  - receiver reference 8
+  - of Î<sub>x</sub> and Î<sub>y</sub> 111
+  - relation to period 17
+- exponential
+  - scale in two-dimensional NMR 190
+  - complex 498
+  - frequency discrimination
+  - falling, as weighting function 92
+  - by quadrature detection 491
+  - function, relation to logarithms 495
+  - in one-dimensional experiments 226
+  - rising, as weighting function 94
+  - in terms of coherence transfer pathway 389
+- extreme narrowing see fast motion
+  - P- and N-type in two-dimensional NMR 228
+  - States–Haberkorn–Ruben method 230
+  - TPPI method 231
+- fast motion 257
+  - relationship between longitudinal and transverse relaxation
+  - Gaussian
+  - rates 295
+  - lineshape 97
+  - sign of NOE enhancement 277
+  - weighting function 95
+  - spectral density 257
+  - gyromagnetic ratio 29
+- FID see free induction decay
+- field gradient pulse
+  - advantages and disadvantages of 426
+  - controlling phase errors 419
+  - Hamiltonian
+  - dephasing during 415
+  - as operator for energy 29
+  - DPFGSE 433
+  - determining time evolution 118, 129
+  - in conjunction with inversion pulse 418
+  - for coupling 37
+  - in conjunction with refocusing pulses 418
+  - for one spin in a field 29
+  - in DQF COSY 421
+  - for three spins with coupling 40
+  - in HMQC 422
+  - for two spins without coupling 35
+  - in HSQC 424
+  - free precession for one spin 140
+  - inability to select multiple pathways 416
+  - free precession for two spins 157
+  - introduced 409
+  - in frequency units 34
+  - obtaining absorption mode lineshapes when gradients used
+  - pulse for one spin 123, 141
+  - in t<sub>1</sub> 417
+  - phase errors due to 419
+  - pulse for two spins 157
+  - strong coupling 442
+  - refocusing condition 413
+  - hard pulse 59
+  - selection of a single pathway 412
+  - selective excitation 432
+  - HETCOR
+  - analysis using product operators 220
+  - shaped 414
+  - sign of gradient 409
+  - form of spectrum 221
+  - pulse sequence 220
+  - strength of gradient 411
+- field–frequency lock 485
+  - heteronuclear correlation spectra 208
+- flip angle
+  - HETCOR 220
+  - HMBC 215, 347
+  - determination 61
+  - of pulse 57
+  - HMQC 212
+- folding 490
+  - HSQC 209
+- Fourier transform
+  - normal vs inverse 208
+
+## J
+
+
+## K
+
+
+## L
+
+
+## I
+
+- heteronuclear steady-state NOE 280
+  - integral 9
+  - dependence on gyromagnetic ratio 280
+  - interferogram 185
+- HMBC
+  - inverse detection
+  - choice of fixed delay 215
+  - in heteronuclear correlation spectra 208
+  - effect of <sup>1</sup>H–<sup>1</sup>H couplings 347
+  - sensitivity advantage 212
+  - form of multiplets in ω<sub>2</sub> 348
+  - inversion pulse
+  - of quinine 218
+  - described using product operators 146
+  - pulse sequence 213
+  - described using vector model 58
+  - suppressing one-bond correlations in 218
+  - effect on coherence order 386
+  - with suppression of one-bond correlations, pulse sequence
+  - with field gradient pulse 418
+  - 219
+  - inversion–recovery
+- HMQC
+  - analysis of data from 264
+  - analysis using product operators 213
+  - pulse sequence 264
+  - of quinine 215
+  - isotropic mixing 221
+  - pathway selection using gradients 422
+  - phase cycle 407
+  - pulse sequence 213
+  - sensitivity of 215
+  - J-modulation
+  - suppression of unwanted I spin magnetization with
+  - of spin echo in I<sub>n</sub>S spin system 455
+  - gradients 424
+  - of spin echo in homonuclear spin system 159
+- homogeneous broadening 300
+  - spectra showing 162
+- homospoil pulse 420
+  - suppression in constant time experiment 353
+- HSQC
+  - analysis using product operators 209
+  - constant time 357
+  - constant time, advantage of 358
+  - ket 107
+  - constant time, pulse sequence 357
+  - coupled in both dimensions, pulse sequence 359
+  - coupled or decoupled acquisition 211
+  - form of spectrum 211
+  - Larmor frequency
+  - pathway selection using gradients 424
+  - as rate of precession 50
+  - pulse sequence 210
+  - definition of 32
+  - purge gradient in 425
+  - influence of chemical shift 33
+  - sensitivity 212
+  - relation to gyromagnetic ratio 32
+  - sensitivity-enhanced 350
+  - Larmor precession
+  - suppression of unwanted signals 211
+  - about applied field 50
+  - detection of 51
+  - in rotating frame 55
+  - lattice
+  - coming to equilibrium with 246
+- in-phase magnetization 153
+  - line broadening 92
+  - in three-spin system 321
+  - lineshape
+  - interconversion with anti-phase using spin echo 163
+  - absolute value 235
+  - multiplet from 154
+  - absorption mode 9
+- INADEQUATE
+  - absorption mode Lorentzian 84
+  - example of 206
+  - dispersion mode Lorentzian 84
+  - principle of experiment 206
+  - effect of phase 85
+- INEPT 167
+  - Gaussian 97
+  - coupled acquisition 168
+  - mixed 86
+  - decoupled acquisition 169
+  - in I<sub>n</sub>S spin systems 458
+  - phase-twist 228
+  - two-dimensional double absorption 188
+  - sensitivity enhancement 167
+  - two-dimensional double dispersion 197
+- inhomogeneous broadening 300
+  - width of 9
+  - decay due to 300
+  - description using T<sup>*2</sub> 303
+  - linewidth
+  - at half height 9
+  - due to field gradient 411
+  - in ω<sub>1</sub> of constant time COSY 356
+  - origin of 300
+  - local field
+  - refocused by spin echo 301
+  - dipolar 244
+- initial rate approximation
+  - effect on z-magnetization244
+  - analysis of NOESY 282
+  - from CSA 250
+  - analysis of transient NOE experiment 275
+
+## N
+
+
+## M
+
+
+## O
+
+- lock 485
+  - heteronuclear 214, 462
+- logarithms
+  - multiple-quantum transition
+  - natural 495
+  - in three-spin system 42
+- long-range coupling, heteronuclear
+  - in two-spin system 39
+  - detected using HMBC 215
+  - multiplet
+- longitudinal relaxation 246
+  - doublet of doublets 11
+  - behaviour of isolated spins 263
+  - prediction using tree diagram 10
+  - dipolar, of two spins 269
+  - two-dimensional 191
+  - effect of correlation time 295
+  - estimating rate constant for 264
+  - maximum in rate 257
+  - N-type
+  - quick estimate of rate constant for 266
+  - by combining cosine and sine modulated data 228
+- Lorentz-to-Gauss transformation 97
+  - coherence transfer pathway for 390
+- Lorentzian lineshape 84
+  - spectrum 229
+  - table of width and height parameters 86
+  - NOE
+- lowering operator 174, 382
+  - as a result of cross relaxation 274
+  - difference spectrum 276, 278
+  - measured using steady-state experiment 278
+  - measured using transient NOE experiment 274
+- magnet
+  - transient experiment using DPFGSE 433
+  - superconducting 483
+  - NOE enhancement
+- magnetic equivalence 447
+  - competition between cross and self relaxation 279
+  - consequences for spectra 449
+  - defined 277
+- magnetic moment
+  - in steady-state NOE experiment 279
+  - behaviour during relaxation 243
+  - in transient experiment 277
+  - energy in a field 47
+  - sign of 277
+- matched filter 94
+  - transverse, in ROESY 299
+- matrix representation
+  - NOESY
+  - of Î<sub>x</sub>, Î<sub>y</sub> and Î<sub>z</sub> 112
+  - analysed using the Solomon equations 281
+  - of density operator 127
+  - cross and diagonal peaks 283
+  - of operator 111
+  - of quinine 284
+  - orthogonality 130
+  - phase cycle 407
+- measurement
+  - pulse sequence 281
+  - expectation value 109
+  - relayed peaks 285
+  - in quantum mechanics 24, 28
+  - spin diffusion in 285
+  - relation to eigenvalues 28
+  - suppression of axial peaks 283
+- mixer 490
+  - z-filter in 430
+  - with phase shifted reference 491
+  - zero-quantum interference 427
+- mixing period 184
+  - noise
+  - isotropic, in TOCSY 221
+  - origin of 90
+- modulation in two-dimensional NMR
+  - non-secular 293
+  - amplitude, in terms of coherence transfer pathway 390
+  - part of transverse relaxation 247, 286
+  - cosine amplitude 187
+  - non-selective pulse see hard pulse
+  - cosine and sine leading to lack of frequency discrimination
+  - normalization
+  - 227
+  - of wavefunction 108
+  - mixed cosine and sine 189
+  - nuclear Overhauser effect see NOE
+  - obtaining cosine and sine modulated data 227
+  - Nyquist frequency 490
+  - phase 228
+  - folding 490
+  - phase, in terms of coherence transfer pathway 390
+  - sine amplitude 189
+- motion
+  - cross relaxation in two motional regimes 272
+  - observable
+  - in a liquid 251
+  - coherence order 386
+  - longitudinal and transverse relaxation rates in the two
+  - product operator 451
+  - motional regimes 295
+  - product operators 156
+  - motional regimes 257
+  - off-resonance effects 67
+- multiple-quantum coherence
+  - excitation of a range of offsets 69
+  - effect of J-coupling on 176, 368
+  - offset frequency
+  - evolution of 176
+  - in rotating frame 55
+  - generation from anti-phase terms 176
+
+## P
+
+  - of peak 8
+  - from phase modulated data 228
+  - refocused by spin echo 65
+  - photons
+- operator
+  - energy of 20
+  - eigenfunction of 28
+  - polarization operators
+  - for x- and y-components of spin angular momentum 111
+  - defined 337
+  - for z-component of spin angular momentum 29
+  - effect of pulses 339
+  - lowering 174
+  - free evolution 338
+  - matrix representation 111
+  - small flip angle COSY analysed using 340
+  - order of action 27
+  - ZCOSY analysed using 345
+  - raising 174
+  - populations
+  - role in quantum mechanics 27
+  - related to I<sub>1z</sub> etc. 269
+  - related to ensemble average 115
+  - used in analysis of dipolar relaxation of two spins 269
+  - used to compute z-magnetization115, 258
+  - pre-amplifier 488
+- P-type
+  - precession
+  - by combining cosine and sine modulated data 228
+  - about applied field 50
+  - coherence transfer pathway for 390
+  - detection of 51
+  - spectrum 228
+  - in rotating frame 55
+- paramagnetic species
+  - probe 485
+  - relaxation by 250
+  - cryo 486
+- passive coupling
+  - tuning and matching 485
+  - in COSY cross peak 328
+  - product operators
+- passive spin
+  - diagrammatic representation of evolution of coupling 152
+  - in COSY cross peak 328
+  - diagrammatic representation of rotations 147
+  - in spectrum of three coupled spins 42
+  - double- and zero-quantum terms 175
+  - in spectrum of two coupled spins 38
+  - effect of coupling on 150
+- phase 17
+  - for I<sub>n</sub>S spin systems 450
+  - correction of errors in spectrum 88
+  - for one spin 139
+  - effect on lineshape 85
+  - for three spins 320
+  - errors due to field gradient pulses 419
+  - for two spins 149
+  - in two-dimensional spectra 234
+  - interpretation, for two spins 150
+  - of peaks in COSY 197
+  - limitations 142
+  - origin of frequency dependent 88
+  - notation for heteronuclear spin systems 157
+  - receiver 391
+  - observable operators 156, 451
+- phase correction
+  - relation to magnetization 140
+  - frequency-dependent or first-order 88
+  - product operators, analysis using
+  - frequency-independent or zero-order 88
+  - 1–1 sequence 148
+  - in two-dimensional spectra 234
+  - constant time COSY 354
+- phase cycle
+  - COSY 191
+  - COSY 405
+  - double-quantum spectroscopy 204, 366
+  - double-quantum spectroscopy 406
+  - DQF COSY 200
+  - DQF COSY 405
+  - HETCOR 220
+  - EXORCYCLE 402
+  - HMQC 213
+  - HMQC 407
+  - HSQC 209
+  - NOESY 407
+  - INEPT 168
+- phase cycling
+  - pulse–acquire 143
+  - basic principle 395
+  - sensitivity-enhanced HSQC 350
+  - combining different cycles 399
+  - spin echo 145
+  - grouping pulses together 401
+  - spin echo in I<sub>n</sub>S spin system 455
+  - neglect of high-order coherences 402
+  - spin echo in heteronuclear spin system 164
+  - of final pulse 402
+  - spin echo in homonuclear spin systems 158
+  - of first pulse 401
+  - TOCSY 222
+  - problems with 408
+  - pulse
+  - refocusing pulse 402
+  - calibration of 61
+  - selection of a pathway 396
+  - effect on coherence order 385
+  - selectivity of a given cycle 398
+  - flip angle of 57
+  - time saving tricks 401
+  - Hamiltonian for 123
+- phase shift
+  - hard 59
+  - relation to circular motion 18
+  - inversion 58
+- phase-twist lineshape
+
+## R
+
+
+## Q
+
+  - on resonance 57
+  - phase error due to 68
+  - radiofrequency field
+  - phase of 66
+  - calibration of 62
+  - swept-frequency 431
+  - described using rotating frame 53
+- pulse programmer 493
+  - generation using coil 52
+- pulse sequence
+  - raising operator 174, 382
+  - 1–1 148
+  - effect of z-rotation 382
+  - APT 457
+  - rate constant
+  - constant time COSY 354
+  - for longitudinal relaxation 262
+  - constant time HSQC 357
+  - for longitudinal relaxation of two spins by dipolar
+  - COSY 191
+  - mechanism 272
+  - DEPT 462
+  - for relaxation due to CSA 305
+  - double-quantum spectroscopy 204
+  - for transverse relaxation 293
+  - DPFGSE NOE 433
+  - related to spectral density 271
+  - DQF COSY 200
+  - theoretical prediction of 271
+  - HETCOR 220
+  - receiver
+  - HMBC 213
+  - block diagram 492
+  - HMBC, with suppression of one-bond correlations 219
+  - hardware 488
+  - HMQC 213
+  - phase 391
+  - HSQC 210
+  - phase following signal 395, 396
+  - HSQC, coupled in both dimensions 359
+  - reference frequency 8
+  - INEPT 168
+  - reduced correlation function 255
+  - inversion–recovery 264
+  - reduced field 55
+  - NOESY 281
+  - reduced multiplets
+  - pulse–acquire 13, 60, 143
+  - construction of 332
+  - ROESY 299
+  - determination of relative signs of couplings 333
+  - sensitivity-enhanced HSQC 351
+  - from small flip angle COSY 335
+  - spin echo 63
+  - in COSY with one heteronucleus 330
+  - steady-state NOE 278
+  - in terms of anti-phase square arrays 333
+  - TOCSY 222
+  - measuring passive coupling 334
+  - transient NOE 274
+  - reduced spectral density 257
+  - TROSY HSQC 363
+  - reference compound 6
+  - ZCOSY 345
+  - refocusing pulse
+- purge gradient 420
+  - description using product operators 146
+  - in z-filter 428
+  - description using vector model 63
+  - in HSQC 425
+  - phase cycle 402
+  - with field gradient pulse 418
+  - relative signs of couplings
+  - determined using reduced multiplets 333
+- quadrature artifacts 403
+  - effect on ABX spectrum 472
+- quadrature detection
+  - relaxation
+  - principle 491
+  - defined 242
+- quadrature images 403
+  - due to CSA 304
+- quantum mechanics 26
+  - due to random fields 294
+  - measurement in 109
+  - in terms of populations 260
+  - observation in 24
+  - longitudinal dipolar, of two spins 267
+  - of one spin 105
+  - mechanisms 249
+  - operators in 27
+  - time between experiments 266
+  - wavefunctions in 26
+  - relaxation delay 13, 266
+- quinine
+  - relaxation mechanism
+  - APT 459
+  - CSA 250
+  - coupled and decoupled <sup>13</sup>C spectra 14
+  - dipolar 244, 249
+  - DEPT 467
+  - paramagnetic species 250
+  - DPFGSE NOE 434
+  - random fields 294
+  - HMBC 218
+  - resolution
+  - HMQC 215
+  - effect of linewidth 9
+  - NOESY 284
+  - resolution enhancement 94
+  - proton spectrum 13
+  - Lorentz-to-Gauss transformation 97
+  - structure 13
+  - specifying parameters for 96
+  - TOCSY 225
+  - with rising exponential and Gaussian 95
+
+## S
+
+  - with sine bell 98
+  - spectral density in 258
+- ROESY
+  - soft pulses 69
+  - pulse sequence 299
+  - inversion with 70
+  - shaped 70
+- roofing 444
+- rotating frame
+  - Solomon equations 271
+  - analysis of NOESY 282
+  - description of radiofrequency field 53
+  - detection in 60
+  - analysis of steady-state NOE 278
+  - analysis of transient NOE 275
+  - effective field in 55
+  - Larmor precession in 55
+  - in presence of cross correlation 308
+  - spatially dependent phase
+  - reduced field in 55
+- rotation
+  - defined 411
+  - dependence on experimental parameters 412
+  - diagrammatic representation of rotations of angular
+  - momentum operators 147
+  - due to shaped gradient 414
+  - in heteronuclear systems 414
+  - of spin angular momentum operators 141
+  - table of rotations of spin angular momentum operators 143
+  - spectral density 256
+  - area under 256
+- rotational diffusion 251
+  - at Larmor frequency, maximum in 257
+  - form for exponential correlation function 256
+  - reduced 257
+- scalar coupling see coupling
+  - relation to correlation function 256
+- secular 293
+  - spectrum
+  - dependence on spectral density of secular part of transverse
+  - one spin 31
+  - relaxation 292
+  - three coupled spins 41
+  - part of transverse relaxation 248, 286, 290
+  - two coupled spins 38
+- selective excitation 69
+  - spin angular momentum
+  - eigenfunctions and eigenvalues of Î<sub>z</sub> 29
+  - aided with gradients 432
+  - in selective COSY 171
+  - matrix representations of operators 112
+  - operator for z-component, Î<sub>z</sub> 29
+  - phase in 70
+  - operators for x- and y-components, Î<sub>x</sub> and Î<sub>y</sub> 111
+  - using shaped pulses 70
+- selective inversion 70, 274
+  - rotations of operators 143
+  - practical implementation in TROSY 362
+  - spin diffusion see slow motion
+  - used in TROSY 360
+  - spin echo
+- self relaxation 270
+  - description using vector model 63
+- sensitive volume 410
+  - for one spin, analysed using product operators 145
+- sensitivity enhancement 92
+  - gradient echo for selective excitation 432
+  - matched filter 94
+  - in heteronuclear systems, analysed using product operators
+- sensitivity-enhanced experiments 349
+  - 164
+  - HSQC 350
+  - in homonuclear systems, analysed using product operators
+- sensitivity-enhanced HSQC
+  - 158
+  - analysed using product operators 350
+  - in I<sub>n</sub>S spin systems 455
+  - practical aspects 353
+  - interconversion of in-phase and anti-phase states 163
+  - processing 352
+  - offset refocused by 65
+  - pulse sequence 351
+  - phase evolution during 66
+- shaped pulses 70
+  - refocusing of inhomogeneous broadening 301
+- shims 484
+  - used to measure rate constant for transverse relaxation 304
+- signal-to-noise ratio
+  - spin lattice relaxation see longitudinal relaxation
+  - effect of acquisition time on 91
+  - spin locking 298
+  - improved using weighting function 92
+  - spin state
+  - improvement by time averaging 13
+  - effect on multiplet 10
+- sinc wiggles 100
+  - label for reduced multiplet 332
+  - label for spectrum of two coupled spins 38
+- sine bell
+  - shifted 98
+  - spin system
+  - notation 449
+  - weighting function 98
+- sine bell squared 98
+  - spin system analysis 468
+  - AA<sup>′</sup>XX<sup>′</sup> 476
+- sine modulation
+  - in two-dimensional NMR 189
+  - AB 442, 468
+  - ABX 470
+  - lack of frequency discrimination 227
+  - computer program 477
+  - used in States–Haberkorn–Ruben method 230
+  - spin–spin relaxation see transverse relaxation
+- slow motion 258
+  - States–Haberkorn–Ruben method
+  - sign of NOE enhancement 277
+
+## T
+
+  - frequency discrimination in two-dimensional NMR 230
+  - power level and dB 487
+- States–TPPI 233
+  - transverse magnetization
+- steady-state NOE
+  - free evolution calculated from wavefunction 122
+  - analysed using Solomon equations 278
+  - related to ensemble average 116
+  - heteronuclear 280
+  - zero at equilibrium 49, 116
+  - pulse sequence 278
+  - transverse relaxation 247
+- strong coupling 12, 442
+  - behaviour of isolated spins 293
+  - AA<sup>′</sup>XX<sup>′</sup> 476
+  - cross relaxation 297
+  - AB 442, 468
+  - dipolar, of two spins 296
+  - ABX 470
+  - effect of correlation time 295
+  - roofing 444
+  - effect of cross correlation 308
+- strong coupling parameter 443
+  - measurement of rate constant for 304
+  - placing in correct quadrant 469
+  - non-secular part 247, 286
+- subspectrum
+  - rate constant for 293
+  - in ABX spin system 471
+  - relationship between non-secular part and longitudinal
+- superconducting magnet 483
+  - relaxation 294
+- superposition state 25
+  - secular contribution 290
+  - effect of free evolution 119
+  - secular part 248, 286, 290
+  - effect of pulse on 123
+  - tree diagram 10
+  - for one spin 106
+  - trigonometric identities 499
+  - generation of transverse magnetization by pulse 125
+  - triple-quantum transition
+- swept-frequency pulse 431
+  - in three-spin system 43
+  - TROSY
+  - exploitation of effect 358
+  - in <sup>15</sup>N–<sup>1</sup>H fragment 310
+  - line-selective transfer in 360
+- T<sub>1</sub> 262
+  - multiplet 359
+- t<sub>1</sub> noise 203
+  - origin of effect 310
+- T<sub>2</sub> 294
+- T<sup>*2</sub> 303
+  - TROSY HSQC
+  - processing data from 364
+- tilt angle
+  - pulse sequence 363
+  - of effective field 56
+  - truncation 100
+- time averaging 13
+  - tuning and matching 485
+- time domain
+  - two-dimensional lineshape
+  - complex representation 82
+  - absolute value 235
+  - digitization of 77
+  - double absorption 188
+  - signal with phase shift 86
+  - double dispersion 197
+  - transformation to frequency domain 77
+  - phase-twist 228
+  - truncation, effect of 100
+  - two-dimensional NMR
+  - two-dimensional 185
+  - cosine amplitude modulation 187
+- time proportional phase incrementation see TPPI
+  - COSY 190
+- TOCSY
+  - double-quantum spectroscopy 203, 366
+  - analysis using product operators 222
+  - DQF COSY 200
+  - form of cross- and diagonal-peak multiplets 223
+  - frequency discrimination 226
+  - in extended spin systems 225
+  - frequency scales 190
+  - interpretation of spectrum 221
+  - general scheme 184
+  - isotropic mixing in 221
+  - HETCOR 220
+  - of quinine 225
+  - HMBC 215, 347
+  - pulse sequence 222
+  - HMQC 212
+  - z-filter in 430
+  - HSQC 209
+  - zero-quantum interference in 224
+  - HSQC, constant time 357
+- TPPI 231
+  - INADEQUATE 206
+  - combined with States method 233
+  - NOESY 281
+  - implemented in COSY 233
+  - obtaining cosine and sine modulated data 227
+- transient NOE experiment
+  - phase modulation 228
+  - effect of longer mixing times 278
+  - enhancement in 277
+  - processing 185
+  - recording 185
+  - pulse sequence 274
+- transition
+  - ROESY 299
+  - in terms of energy levels 23
+  - sensitivity-enhanced HSQC 350
+- transmitter 486
+  - sine amplitude modulation 189
+
+## Z
+
+
+## U
+
+
+## V
+
+
+## W
+
+  - TOCSY 221
+  - sine bell squared 98
+  - TROSY HSQC 363
+  - specifying parameters 96
+  - ZCOSY 345
+  - z-filter
+- unit operator 149
+  - in NOESY, TOCSY and ZCOSY 430
+  - introduced 428
+  - suppression of zero-quantum in 429
+  - zero-quantum in 428
+- vector model 47
+  - z-magnetization
+- vector model description of
+  - differential equation for relaxation of 262
+  - off-resonance effects 67
+  - driven to zero by random local fields 244
+  - pulse calibration 61
+  - equilibrium value 246, 260
+  - pulse–acquire 60
+  - in terms of populations 260
+  - pulses 52
+  - recovery to equilibrium, described 263
+  - pulses of different phases 66
+  - relation to magnetic moments 243
+  - refocusing pulse 63
+  - selection with field gradient pulse 420
+  - spin echo 63
+  - ZCOSY
+- virtual coupling 475
+  - advantages 347
+  - analysis using polarization operators 345
+  - form of cross-peak multiplet 346
+  - form of diagonal-peak multiplet 346
+- wavefunction 24
+  - pulse sequence 345
+  - eigenfunction 28
+  - z-filter in 430
+  - normalization 108
+  - zero filling 99
+  - orthogonal 108
+  - zero-frequency glitch 403
+  - role in quantum mechanics 26
+  - zero-quantum coherence
+  - superposition state 25, 106
+  - dephasing 430
+  - time evolution 118
+  - diagrammatic representation of evolution 178
+- weak coupling 12, 442
+  - evolution of 176
+- weighting function
+  - generation from anti-phase terms 176
+  - decaying exponential, to enhance sensitivity 92
+  - interference in NOESY 427
+  - Gaussian to control noise 95
+  - interference in TOCSY 224
+  - Gaussian used in conjunction with rising exponential 95
+  - representation using product operators 175
+  - Lorentz-to-Gauss transformation 97
+  - suppression of 426
+  - matched filter 94
+  - zero-quantum dephasing 430
+  - resolution enhancement with 94
+  - zero-quantum transition
+  - shifted sine bell 98
+  - in three-spin system 42
+  - sine bell 98
+  - in two-spin system 39

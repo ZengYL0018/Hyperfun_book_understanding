@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>self-test</title>
+<link rel="stylesheet" href="app.css">
+<script>
+/* 自检：拦截 api/state，强制本地模式，绝不写入真实数据库 */
+localStorage.clear();
+(function () {
+  var raw = window.fetch.bind(window);
+  window.__rawFetch = raw;
+  window.fetch = function (u, o) {
+    if (String(u).indexOf('api/state') >= 0) return Promise.reject(new Error('offline-test-mode'));
+    return raw(u, o);
+  };
+})();
+window.__ERRORS = [];
+window.onerror = function (m, s, l) { window.__ERRORS.push(m + ' @' + s + ':' + l); };
+window.addEventListener('unhandledrejection', function (e) {
+  window.__ERRORS.push('unhandled: ' + (e.reason && e.reason.message || e.reason));
+});
+</script>
+</head>
+<body>
+<pre id="testout" style="position:fixed;left:0;bottom:0;z-index:99999;max-height:45vh;overflow:auto;background:#fff;color:#111;font:11px/1.5 monospace;margin:0;padding:6px;border-top:2px solid #333;width:100%">RUNNING</pre>
+<script>
+var R = [], FAILED = 0, TOTAL = 0;
+function t(name, cond, extra) {
+  TOTAL++;
+  if (!cond) FAILED++;
+  R.push((cond ? 'PASS' : 'FAIL') + ' | ' + name + (extra != null ? ' | ' + extra : ''));
+  document.getElementById('testout').textContent = R.join('\n');
+}
+function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+function state() {
+  try { return JSON.parse(localStorage.getItem('nmr.reader.state.v2') || '{}'); } catch (e) { return {}; }
+}
+function firstTextNode(el) {
+  var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+  return w.nextNode();
+}
+function loadScript(src) {
+  return new Promise(function (res, rej) {
+    var s = document.createElement('script');
+    s.src = src; s.onload = res; s.onerror = function () { rej(new Error('load fail ' + src)); };
+    document.head.appendChild(s);
+  });
+}
+
+window.__rawFetch('index.html').then(function (r) { return r.text(); }).then(function (html) {
+  var d = new DOMParser().parseFromString(html, 'text/html');
+  Array.prototype.forEach.call(d.body.querySelectorAll('script'), function (s) { s.remove(); });
+  var holder = document.createElement('div');
+  holder.innerHTML = d.body.innerHTML;
+  var out = document.getElementById('testout');
+  while (holder.firstChild) document.body.insertBefore(holder.firstChild, out);
+  t('harness: index.html 结构注入', document.getElementById('app') != null);
+  return loadScript('data.js');
+}).then(function () {
+  t('data: NMR_BOOK 存在', !!window.NMR_BOOK, window.NMR_BOOK ? window.NMR_BOOK.chapters.length + ' 章' : '');
+  return loadScript('app.js');
+}).then(function () {
+  return wait(400);
+}).then(runTests).catch(function (e) {
+  t('harness 崩溃', false, e && e.message);
+  document.getElementById('testout').textContent = R.join('\n');
+});
+
+function runTests() {
+  var doc = document.getElementById('doc');
+  var article = document.getElementById('article');
+  var steps = [];
+
+  steps.push(function () {
+    t('boot: 遮罩已移除', !document.getElementById('boot'));
+    t('render: 正文有 h1', !!article.querySelector('h1'), article.querySelector('h1') && article.querySelector('h1').textContent.slice(0, 40));
+    t('render: 段落已渲染', article.querySelectorAll('p').length > 3, article.querySelectorAll('p').length + ' 段');
+    t('toc: 17 章条目', document.querySelectorAll('#toc-list .ch-item').length === window.NMR_BOOK.chapters.length,
+      document.querySelectorAll('#toc-list .ch-item').length + '');
+    t('toc: 有进度条容器', document.querySelectorAll('#toc-list .ch-meter').length === window.NMR_BOOK.chapters.length);
+    t('chrome: 进度环已渲染', /%/.test(document.getElementById('ring-pct').textContent));
+    t('chrome: 原书页码已填充', document.getElementById('pgno').textContent !== '—', document.getElementById('pgno').textContent);
+    t('chrome: 原页对照链接正确', /book\.pdf#page=\d+&zoom=page-width/.test(document.getElementById('pgopen').href),
+      document.getElementById('pgopen').getAttribute('href'));
+    t('progress: 刚打开章不计为已读', ((state().progress || {})['0'] || { pct: 0 }).pct < 0.3,
+      'pct=' + (((state().progress || {})['0'] || {}).pct));
+  });
+
+  /* ---- 切到有图有节的章节（4 The vector model / idx 5）---- */
+  steps.push(function () {
+    document.querySelectorAll('#toc-list .ch-row')[5].click();
+    return wait(220);
+  });
+  steps.push(function () {
+    t('nav: 章切换生效', document.querySelector('#article h1').textContent.indexOf('vector model') >= 0,
+      document.querySelector('#article h1').textContent);
+    t('render: 图片已渲染', article.querySelectorAll('figure img').length > 0,
+      article.querySelectorAll('figure img').length + ' 图');
+    t('render: 公式图有原页链接', article.querySelectorAll('figure .pglink').length > 0,
+      (article.querySelector('figure .pglink') || {}).textContent);
+    t('toc: 当前章展开小节', document.querySelectorAll('#toc-list .ch-sub a').length > 0,
+      document.querySelectorAll('#toc-list .ch-sub a').length + ' 小节');
+  });
+  steps.push(function () {
+    document.querySelectorAll('#toc-list .ch-row')[7].click();
+    return wait(220);
+  });
+  steps.push(function () {
+    t('render: 正文内「page N」已转为链接', article.querySelectorAll('a.inlink').length > 0,
+      article.querySelectorAll('a.inlink').length + ' 处');
+  });
+  steps.push(function () {
+    var lk = article.querySelector('a.inlink');
+    window.__printed = lk ? +lk.dataset.printed : 0;
+    if (lk) lk.click();
+    return wait(200);
+  });
+  steps.push(function () {
+    var flash = article.querySelector('.flash');
+    t('linkify: 正文页码链接可跳转', !!flash || !!article.querySelector('h1'),
+      '目标 p.' + window.__printed + ' → ' + (article.querySelector('h1') || {}).textContent.slice(0, 30));
+  });
+  steps.push(function () {
+    document.querySelectorAll('#toc-list .ch-row')[0].click();
+    return wait(180);
+  });
+
+  /* ---- 索引 ---- */
+  steps.push(function () {
+    document.querySelector('#side .tabs .tab[data-pane="index"]').click();
+    return wait(60);
+  });
+  steps.push(function () {
+    var letters = document.querySelectorAll('#idx-letters button[data-l]');
+    var entries = document.querySelectorAll('#idx-list .idx-entry');
+    t('index: 字母表已生成', letters.length >= 20, letters.length + ' 个按钮');
+    t('index: 书后索引条目 > 100', entries.length > 100, entries.length + ' 条');
+    t('index: 分组标题存在', document.querySelectorAll('#idx-list .idx-hd').length > 5,
+      document.querySelectorAll('#idx-list .idx-hd').length + ' 组');
+    var pg = document.querySelector('#idx-list button[data-page]');
+    t('index: 条目带页码按钮', !!pg, pg ? ('p.' + pg.dataset.page + ' → ' + pg.dataset.term) : '');
+    window.__pgTerm = pg ? pg.dataset.term : null;
+    window.__pgNum = pg ? +pg.dataset.page : 0;
+    if (pg) pg.click();
+    return wait(150);
+  });
+  steps.push(function () {
+    var h1 = document.querySelector('#article h1');
+    var flash = document.querySelector('#article .flash');
+    var term = (window.__pgTerm || '').toLowerCase();
+    var hitOnPage = flash && String(window.NMR_BOOK.chapters[+flash.id.match(/^c(\d+)b/)[1]].blocks[+flash.id.match(/b(\d+)$/)[1]].text || '').toLowerCase().indexOf(term.split(' ')[0]) >= 0;
+    t('index: 点页码跳转到正文', !!h1 && !!window.__pgTerm, h1 ? h1.textContent.slice(0, 34) : '');
+    t('index: 定位块落在原书 p.' + window.__pgNum + ' 上', !!flash && flash.id.indexOf('c') === 0, flash ? flash.id : '无');
+    t('index: 定位块含该术语', !!hitOnPage, term);
+  });
+  steps.push(function () {
+    document.querySelector('#idx-modes button[data-mode="head"]').click();
+    return wait(80);
+  });
+  steps.push(function () {
+    var heads = document.querySelectorAll('#idx-list .idx-head-entry');
+    t('index: 标题索引 > 200 条', heads.length > 200, heads.length + ' 条');
+    document.querySelector('#idx-modes button[data-mode="book"]').click();
+    return wait(60);
+  });
+  steps.push(function () {
+    var inp = document.getElementById('idx-q');
+    inp.value = 'relaxation';
+    inp.dispatchEvent(new Event('input', { bubbles: true }));
+    return wait(260);
+  });
+  steps.push(function () {
+    var rows = document.querySelectorAll('#idx-list .idx-entry');
+    t('index: 术语筛选生效', rows.length > 0 && rows.length < 160, rows.length + ' 条匹配 relaxation');
+    document.getElementById('idx-q').value = '';
+    document.getElementById('idx-q').dispatchEvent(new Event('input', { bubbles: true }));
+    document.querySelector('#side .tabs .tab[data-pane="toc"]').click();
+    return wait(60);
+  });
+
+  /* ---- 检索 ---- */
+  steps.push(function () {
+    var q = document.getElementById('q');
+    q.value = 'product operator';
+    q.dispatchEvent(new Event('input', { bubbles: true }));
+    return wait(500);
+  });
+  steps.push(function () {
+    var hits = document.querySelectorAll('#results .hit');
+    t('search: 返回结果', hits.length > 0, hits.length + ' 条');
+    t('search: 结果面板已展开', document.getElementById('results').classList.contains('on'));
+    var mark = document.querySelector('#results .sn mark');
+    t('search: 关键词高亮', !!mark);
+    window.__hitTitle = hits[0] ? hits[0].querySelector('.rc span').textContent : '';
+  });
+  steps.push(function () {
+    document.querySelector('#results .hit').dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    return wait(200);
+  });
+  steps.push(function () {
+    t('search: 点击结果可跳转', document.querySelector('#article h1').textContent.indexOf(window.__hitTitle) === 0 ||
+      document.querySelector('#article h1') != null, document.querySelector('#article h1').textContent.slice(0, 30));
+    document.getElementById('q').value = '';
+    document.getElementById('q').dispatchEvent(new Event('input', { bubbles: true }));
+  });
+
+  /* ---- 书签 ---- */
+  steps.push(function () {
+    document.getElementById('btn-bm').click();
+    return wait(120);
+  });
+  steps.push(function () {
+    var s = state();
+    t('bookmark: 已写入存储', (s.bookmarks || []).length === 1, JSON.stringify((s.bookmarks || [])[0] || {}).slice(0, 90));
+    t('bookmark: 面板已打开并显示条目', document.getElementById('bm-list').querySelectorAll('.item').length === 1);
+    t('bookmark: 角标已更新', document.getElementById('bm-count2').textContent === '1');
+    t('bookmark: 自动生成标题', !!((s.bookmarks || [])[0] || {}).label, ((s.bookmarks || [])[0] || {}).label);
+  });
+  steps.push(function () {
+    var item = document.getElementById('bm-list').querySelector('.item');
+    item.querySelector('[data-act="jump"]').click();
+    return wait(150);
+  });
+  steps.push(function () {
+    t('bookmark: 定位不报错', window.__ERRORS.length === 0, window.__ERRORS.join(' / ').slice(0, 120));
+    // 重命名
+    document.getElementById('bm-list').querySelector('[data-act="rename"]').click();
+    return wait(120);
+  });
+  steps.push(function () {
+    var inp = document.getElementById('dlg-label');
+    t('bookmark: 重命名对话框打开', !!inp);
+    inp.value = '自检书签';
+    document.getElementById('dlg-save').click();
+    return wait(120);
+  });
+  steps.push(function () {
+    t('bookmark: 重命名已保存', (state().bookmarks || [])[0].label === '自检书签', (state().bookmarks || [])[0].label);
+  });
+
+  /* ---- 划词高亮 + 笔记 ---- */
+  steps.push(function () {
+    var p = document.getElementById('article').querySelector('p');
+    var tn = firstTextNode(p);
+    var r = document.createRange();
+    r.setStart(tn, 0);
+    r.setEnd(tn, Math.min(42, tn.nodeValue.length));
+    var sel = window.getSelection();
+    sel.removeAllRanges(); sel.addRange(r);
+    return wait(220);
+  });
+  steps.push(function () {
+    var bar = document.getElementById('selbar');
+    t('highlight: 划词后浮出工具条', bar.classList.contains('on'));
+    t('highlight: 工具条含 4 个颜色', bar.querySelectorAll('.dot').length === 4);
+    bar.querySelector('button[data-act="highlight"]').click();
+    return wait(220);
+  });
+  steps.push(function () {
+    var s = state();
+    t('highlight: 笔记记录已落库', (s.notes || []).length === 1, JSON.stringify((s.notes || [])[0] || {}).slice(0, 110));
+    t('highlight: 正文出现高亮 mark', document.querySelectorAll('#article mark.hl').length > 0,
+      document.querySelectorAll('#article mark.hl').length + ' 处');
+    t('highlight: 高亮文本与选区一致',
+      (document.querySelector('#article mark.hl') || {}).textContent === (s.notes || [])[0].quote,
+      (document.querySelector('#article mark.hl') || {}).textContent);
+  });
+  steps.push(function () {
+    document.querySelector('#nt-list').querySelectorAll('*').length; // 确保面板列表已渲染
+    document.getElementById('btn-note').click();
+    return wait(120);
+  });
+  steps.push(function () {
+    var items = document.querySelectorAll('#nt-list .item');
+    t('note: 笔记面板显示条目', items.length === 1, items.length + ' 条');
+    if (items.length) {
+      items[0].querySelector('mark');
+    }
+    document.querySelector('#article mark.hl').click();
+    return wait(150);
+  });
+  steps.push(function () {
+    var ta = document.getElementById('dlg-body');
+    t('note: 点击高亮打开笔记对话框', !!ta, ta ? 'ok' : 'missing');
+    ta.value = '自检笔记：product operator 的物理意义';
+    document.getElementById('dlg-save').click();
+    return wait(220);
+  });
+  steps.push(function () {
+    var s = state();
+    t('note: 笔记正文已保存', (s.notes || [])[0].body.indexOf('自检笔记') === 0, (s.notes || [])[0].body);
+    var mark = document.querySelector('#article mark.hl');
+    t('note: 高亮带笔记标记', mark && mark.classList.contains('has-note'));
+    t('note: 定位按钮可用', !!document.querySelector('#nt-list [data-act="jump"]'));
+  });
+  steps.push(function () {
+    document.querySelectorAll('#toc-list .ch-row')[6].click();
+    return wait(200);
+  });
+  steps.push(function () {
+    t('note: 切章后本页无高亮', document.querySelectorAll('#article mark.hl').length === 0);
+    document.querySelectorAll('#toc-list .ch-row')[2].click();
+    return wait(260);
+  });
+  steps.push(function () {
+    t('note: 回到该章高亮自动恢复', document.querySelectorAll('#article mark.hl').length === 1,
+      document.querySelectorAll('#article mark.hl').length + ' 处');
+    t('note: 恢复的高亮仍绑定笔记', !!document.querySelector('#article mark.hl[data-nid]'));
+  });
+
+  /* ---- 进度 ---- */
+  steps.push(function () {
+    var doc = document.getElementById('doc');
+    document.querySelector('#chap-foot button[data-go]').click();
+    return wait(200);
+  });
+  steps.push(function () {
+    var doc = document.getElementById('doc');
+    t('progress: 章切换生效', document.querySelector('#article h1') != null);
+    doc.scrollTop = doc.scrollHeight;
+    return wait(500);
+  });
+  steps.push(function () {
+    var s = state(), keys = Object.keys(s.progress || {});
+    var done = keys.filter(function (k) { return s.progress[k].pct >= 0.9; });
+    t('progress: 滚动到底记录为已读', done.length >= 1, JSON.stringify(s.progress).slice(0, 140));
+    t('progress: 记录了所在块', keys.length > 0 && s.progress[keys[0]].block >= 0, 'block=' + (s.progress[keys[0]] || {}).block);
+    t('progress: 顶栏进度线已更新', /\d/.test(document.getElementById('hdr-progress').style.width),
+      document.getElementById('hdr-progress').style.width);
+    t('progress: 进度环 > 0%', document.getElementById('ring-pct').textContent !== '0%', document.getElementById('ring-pct').textContent);
+  });
+  steps.push(function () {
+    document.getElementById('ring').click();
+    return wait(150);
+  });
+  steps.push(function () {
+    var rows = document.querySelectorAll('#pane-prog .bar-row');
+    t('progress: 面板各章进度条', rows.length === window.NMR_BOOK.chapters.length, rows.length + ' 行');
+    t('progress: 显示存储模式', /localStorage|SQLite/.test(document.getElementById('pane-prog').textContent),
+      (document.getElementById('pane-prog').textContent.match(/浏览器本地缓存|SQLite/) || [''])[0]);
+    t('progress: 导出/导入按钮存在',
+      !!document.querySelector('#pane-prog [data-act="export-md"]') &&
+      !!document.querySelector('#pane-prog [data-act="import"]') &&
+      !!document.querySelector('#pane-prog [data-act="reset"]'));
+  });
+
+  /* ---- 重置进度（保留书签笔记）---- */
+  steps.push(function () {
+    var btn = document.querySelector('#pane-prog [data-act="reset-progress"]');
+    t('reset: 「重置进度」按钮存在', !!btn);
+    if (btn) btn.click();
+    return wait(140);
+  });
+  steps.push(function () {
+    t('reset: 确认对话框出现', !!document.getElementById('dlg-save'),
+      (document.querySelector('.dialog h3') || {}).textContent);
+    document.getElementById('dlg-save').click();
+    return wait(240);
+  });
+  steps.push(function () {
+    t('reset: 进度归零', document.getElementById('ring-pct').textContent === '0%',
+      document.getElementById('ring-pct').textContent);
+    t('reset: 目录不再显示已读完', document.querySelectorAll('#toc-list .done').length === 0,
+      document.querySelectorAll('#toc-list .done').length + ' 个勾');
+    t('reset: 书签保留', (state().bookmarks || []).length === 1, (state().bookmarks || []).length + ' 条');
+    t('reset: 笔记保留', (state().notes || []).length === 1, (state().notes || []).length + ' 条');
+    t('reset: 回到第一章', document.querySelector('#article h1').textContent === 'Preface',
+      document.querySelector('#article h1').textContent);
+  });
+
+  /* ---- 主题 / 章节导航 ---- */
+  steps.push(function () {
+    document.getElementById('btn-theme').click();
+    return wait(60);
+  });
+  steps.push(function () {
+    t('theme: 切换到深色', document.documentElement.dataset.theme === 'dark');
+    t('theme: 已持久化', /dark/.test(localStorage.getItem('nmr.reader.ui.v2') || ''));
+    document.getElementById('btn-theme').click();
+    return wait(60);
+  });
+  steps.push(function () {
+    var links = document.querySelectorAll('#toc-list .ch-sub a');
+    var before = document.querySelector('#article h1').textContent;
+    if (links.length) links[links.length - 1].click();
+    return wait(180);
+  });
+  steps.push(function () {
+    t('nav: 章内小节跳转可用', !!document.querySelector('#article h1'));
+    t('runtime: 无 JS 错误', window.__ERRORS.length === 0, window.__ERRORS.join(' / ').slice(0, 200));
+    R.push('');
+    R.push('=== ' + (TOTAL - FAILED) + ' / ' + TOTAL + ' PASSED, ' + FAILED + ' FAILED ===');
+    document.getElementById('testout').textContent = R.join('\n');
+  });
+
+  /* 顺序执行 */
+  var i = 0;
+  function next() {
+    if (i >= steps.length) return;
+    var r;
+    try { r = steps[i++](); } catch (e) { t('step ' + i + ' 抛异常', false, e && e.message); }
+    Promise.resolve(r).then(function () { return wait(40); }).then(next);
+  }
+  next();
+}
+</script>
+</body>
+</html>

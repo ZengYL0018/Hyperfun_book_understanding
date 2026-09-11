@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding NMR Spectroscopy · 阅读版</title>
+<style>
+  :root{
+    --ink:#1e2328; --ink2:#5b6570; --line:#e4e0d8; --paper:#faf8f4; --card:#fff;
+    --teal:#008BB0; --teal-d:#006d8a; --hi:#fff2b8; --w:820px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;
+    font-size:17px; line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  /* ---------- 顶栏 ---------- */
+  header{
+    position:sticky; top:0; z-index:40; display:flex; align-items:center; gap:14px;
+    padding:10px 18px; background:rgba(250,248,244,.94); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  #burger{display:none;border:0;background:none;font-size:20px;cursor:pointer;color:var(--ink2)}
+  .brand{font-weight:700;letter-spacing:.2px;white-space:nowrap}
+  .brand small{display:block;font-weight:400;font-size:11.5px;color:var(--ink2);letter-spacing:0}
+  .search{flex:1;position:relative;max-width:520px}
+  .search input{
+    width:100%;padding:8px 12px;border:1px solid var(--line);border-radius:9px;
+    background:var(--card);font-family:inherit;font-size:14px;color:var(--ink);outline:none
+  }
+  .search input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,139,176,.12)}
+  #results{
+    position:absolute;top:44px;left:0;right:0;max-height:60vh;overflow:auto;background:var(--card);
+    border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.12);display:none
+  }
+  #results.on{display:block}
+  #results div{padding:9px 12px;border-bottom:1px solid #f2efe9;cursor:pointer;font-size:13.5px;line-height:1.5}
+  #results div:last-child{border-bottom:0}
+  #results div:hover{background:#f5f2ec}
+  #results .rc{color:var(--teal-d);font-weight:700;font-size:12px}
+  #results mark{background:var(--hi);padding:0 1px}
+  .tbtn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 11px;
+        font-family:inherit;font-size:13px;cursor:pointer;color:var(--ink2);white-space:nowrap}
+  .tbtn:hover{border-color:var(--teal);color:var(--teal-d)}
+  /* ---------- 布局 ---------- */
+  #wrap{display:flex;align-items:flex-start;max-width:1400px;margin:0 auto}
+  nav{
+    width:290px;flex:0 0 290px;position:sticky;top:62px;height:calc(100vh - 62px);
+    overflow:auto;padding:16px 10px 60px 18px;border-right:1px solid var(--line)
+  }
+  nav a{display:block;color:var(--ink2);text-decoration:none;font-size:13.5px;line-height:1.5;
+        padding:5px 9px;border-radius:7px;font-family:system-ui,"Segoe UI",sans-serif}
+  nav a:hover{background:#f1eee8;color:var(--ink)}
+  nav a.ch{font-weight:600;color:var(--ink);margin-top:9px}
+  nav a.on{background:#e6f4f8;color:var(--teal-d)}
+  nav a.sub{padding-left:20px;font-size:12.5px}
+  nav a.sub3{padding-left:34px;font-size:12px;color:#7c858e}
+  nav .grp{margin-bottom:2px}
+  main{flex:1;min-width:0;padding:30px clamp(16px,4vw,54px) 140px}
+  .page{max-width:var(--w);margin:0 auto}
+  /* ---------- 内容 ---------- */
+  h1{font-size:1.72em;line-height:1.3;margin:.2em 0 .5em;color:var(--teal-d);
+     border-bottom:2px solid #d9eef4;padding-bottom:.3em}
+  h2{font-size:1.28em;margin:1.9em 0 .5em;color:var(--teal-d);line-height:1.35}
+  h3{font-size:1.08em;margin:1.5em 0 .4em;color:#2b3a42}
+  h4{font-size:1em;margin:1.3em 0 .3em;color:#455;letter-spacing:.02em}
+  p{margin:0 0 .95em;text-align:justify;hyphens:auto}
+  ul{margin:.2em 0 1em;padding-left:1.4em}
+  li{margin:.25em 0}
+  sup,sub{font-size:.72em;line-height:0}
+  .cap{font-size:.9em;color:#3d474f;background:var(--card);border-left:3px solid var(--teal);
+       padding:9px 14px;border-radius:0 8px 8px 0;text-align:left}
+  .cap b{color:var(--teal-d)}
+  figure{margin:1.1em 0 1.5em;text-align:center}
+  figure img{max-width:100%;height:auto;cursor:zoom-in;background:#fff;
+             border:1px solid var(--line);border-radius:8px;padding:4px}
+  figure.eq img{max-width:min(100%,660px);border:0;padding:0}
+  figure.tbl img{border:0;padding:0}
+  .pglink{display:inline-block;font-size:11.5px;color:#9aa3ab;margin-top:4px;
+          font-family:system-ui,sans-serif;text-decoration:none}
+  .pglink:hover{color:var(--teal-d)}
+  /* ---------- 底部页码条 ---------- */
+  #pager{
+    position:fixed;right:18px;bottom:16px;z-index:30;background:var(--card);
+    border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-size:12.5px;
+    font-family:system-ui,sans-serif;color:var(--ink2);box-shadow:0 6px 20px rgba(0,0,0,.08);
+    display:flex;align-items:center;gap:10px
+  }
+  #pager a{color:var(--teal-d);text-decoration:none;font-weight:600}
+  /* ---------- 放大 ---------- */
+  #zoom{position:fixed;inset:0;background:rgba(20,22,25,.92);z-index:80;display:none;
+        align-items:center;justify-content:center;cursor:zoom-out;padding:24px}
+  #zoom.on{display:flex}
+  #zoom img{max-width:96%;max-height:96%;background:#fff;border-radius:6px}
+  .empty{padding:14px 16px;font-size:13px;color:var(--ink2)}
+  @media (max-width:900px){
+    nav{position:fixed;left:0;top:62px;bottom:0;background:var(--paper);z-index:35;
+        transform:translateX(-102%);transition:.22s;box-shadow:6px 0 22px rgba(0,0,0,.1)}
+    nav.on{transform:none}
+    #burger{display:block}
+    .brand small{display:none}
+    main{padding:20px 16px 130px}
+    body{font-size:16px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <button id="burger" title="目录">☰</button>
+  <div class="brand">Understanding NMR Spectroscopy<small>James Keeler · 2nd ed. · Wiley 2010</small></div>
+  <div class="search">
+    <input id="q" type="search" placeholder="全文检索（按 / 聚焦，Esc 关闭）" autocomplete="off">
+    <div id="results"></div>
+  </div>
+  <button class="tbtn" id="prevCh" title="上一章">← 上一章</button>
+  <button class="tbtn" id="nextCh" title="下一章">下一章 →</button>
+</header>
+
+<div id="wrap">
+  <nav id="nav"></nav>
+  <main><div class="page" id="content"></div></main>
+</div>
+
+<div id="pager">原书 <b id="pgno">—</b> 页 · <a id="pgopen" href="#" target="_blank" rel="noopener">打开原页对照</a></div>
+<div id="zoom"><img id="zoomi" alt=""></div>
+
+<script src="data.js"></script>
+<script>
+window.onerror = function(m, s, l){
+  var p = document.createElement('pre');
+  p.id = 'JSERR';
+  p.style.cssText = 'color:#c00;background:#fff;padding:10px;margin:0;white-space:pre-wrap';
+  p.textContent = 'JS ERROR: ' + m + ' @' + s + ':' + l;
+  document.body.insertBefore(p, document.body.firstChild);
+};
+(function(){
+  var B = window.NMR_BOOK;
+  if(!B){ document.getElementById('content').innerHTML =
+      '<p class="empty">未找到数据文件 data.js</p>'; return; }
+  var nav = document.getElementById('nav'),
+      content = document.getElementById('content'),
+      q = document.getElementById('q'),
+      results = document.getElementById('results'),
+      pgno = document.getElementById('pgno'),
+      pgopen = document.getElementById('pgopen'),
+      zoom = document.getElementById('zoom'),
+      zoomi = document.getElementById('zoomi');
+
+  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function strip(s){ return (s||'').replace(/<[^>]+>/g,''); }
+  function txt(b){ return b.t==='img' ? ('['+b.kind+']') : strip(b.text||''); }
+
+  /* ---------- 目录 ---------- */
+  function buildNav(){
+    var h = '';
+    B.chapters.forEach(function(c,i){
+      h += '<div class="grp"><a class="ch" data-ci="'+i+'" href="#c'+i+'">'
+         + esc(c.title) + '</a>';
+      if(i===cur){
+        c.blocks.forEach(function(b,j){
+          if(b.t==='h' && b.lvl>=2 && b.lvl<=3)
+            h += '<a class="sub'+(b.lvl===3?'3':'')+'" data-ci="'+i+'" data-j="'+j+'" href="#c'+i+'b'+j+'">'
+               + esc(b.text) + '</a>';
+        });
+      }
+      h += '</div>';
+    });
+    nav.innerHTML = h;
+  }
+
+  /* ---------- 渲染 ---------- */
+  function renderChapter(i, scrollTo){
+    cur = i;
+    var c = B.chapters[i];
+    var out = ['<h1 id="c'+i+'">'+esc(c.title)+'</h1>'];
+    c.blocks.forEach(function(b,j){
+      var id = 'c'+i+'b'+j;
+      if(b.t==='h'){
+        // 章标题下方首个同名小节标题不重复显示
+        if(j === 0 && strip(b.text).trim() === c.title.trim()) return;
+        var L = Math.min(4, Math.max(2, b.lvl));
+        out.push('<h'+L+' id="'+id+'">'+esc(b.text)+'</h'+L+'>');
+      } else if(b.t==='p'){
+        out.push(b.bullet ? '<ul><li id="'+id+'">'+b.text+'</li></ul>'
+                          : '<p id="'+id+'">'+b.text+'</p>');
+      } else if(b.t==='cap'){
+        out.push('<p class="cap" id="'+id+'">'+b.text+'</p>');
+      } else {
+        var cls = b.kind==='eq' ? 'eq' : (b.kind==='tbl' ? 'tbl' : 'fig');
+        out.push('<figure class="'+cls+'" id="'+id+'">'
+               + '<img loading="lazy" src="../images/'+b.src+'" alt="">'
+               + '<br><a class="pglink" data-page="'+b.page+'" href="#">原书 p.'+(b.page+1)+'</a>'
+               + '</figure>');
+      }
+    });
+    content.innerHTML = out.join('');
+    buildNav();
+    window.scrollTo(0,0);
+    if(scrollTo){ var el=document.getElementById(scrollTo); if(el) el.scrollIntoView(); }
+    try{ localStorage.setItem('nmr.ch', i); }catch(e){}
+    updatePager();
+  }
+
+  /* ---------- 原页对照 ---------- */
+  function pdfURL(page){
+    return encodeURI(B.pdf) + '#page=' + (page+1) + '&zoom=page-width';
+  }
+  var lastPage = -1;
+  function updatePager(){
+    var blocks = B.chapters[cur].blocks, best = B.chapters[cur].page0;
+    var top = 120;
+    for(var k=0;k<blocks.length;k++){
+      var el = document.getElementById('c'+cur+'b'+k);
+      if(!el) continue;
+      if(el.getBoundingClientRect().top <= top) best = blocks[k].page != null ? blocks[k].page : best;
+      else break;
+    }
+    if(best !== lastPage){ lastPage = best; pgno.textContent = best+1; pgopen.href = pdfURL(best); }
+  }
+  window.addEventListener('scroll', function(){ requestAnimationFrame(updatePager); }, {passive:true});
+
+  content.addEventListener('click', function(e){
+    var im = e.target.closest('figure img');
+    if(im){ zoomi.src = im.src; zoom.classList.add('on'); return; }
+    var pl = e.target.closest('.pglink');
+    if(pl){ e.preventDefault(); window.open(pdfURL(+pl.dataset.page), '_blank'); }
+  });
+  zoom.addEventListener('click', function(){ zoom.classList.remove('on'); zoomi.src=''; });
+  nav.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if(!a) return;
+    e.preventDefault();
+    var i = +a.dataset.ci;
+    if(i !== cur) renderChapter(i, a.dataset.j != null ? 'c'+i+'b'+a.dataset.j : null);
+    else if(a.dataset.j != null){
+      var el = document.getElementById('c'+i+'b'+a.dataset.j); if(el) el.scrollIntoView();
+    } else window.scrollTo({top:0,behavior:'smooth'});
+    if(window.innerWidth<=900) nav.classList.remove('on');
+  });
+  document.getElementById('burger').onclick = function(){ nav.classList.toggle('on'); };
+
+  /* ---------- 检索 ---------- */
+  var INDEX = null;
+  function buildIndex(){
+    INDEX = [];
+    B.chapters.forEach(function(c,i){
+      c.blocks.forEach(function(b,j){
+        if(b.t==='img') return;
+        var s = strip(b.text||'').toLowerCase();
+        if(s) INDEX.push({ci:i, j:j, ch:c.title, s:s});
+      });
+    });
+  }
+  function runSearch(){
+    var v = q.value.trim().toLowerCase();
+    if(!v){ results.classList.remove('on'); results.innerHTML=''; return; }
+    if(!INDEX) buildIndex();
+    var hits = [], n = 0;
+    for(var k=0;k<INDEX.length && n<60;k++){
+      var it = INDEX[k], p = it.s.indexOf(v);
+      if(p < 0) continue;
+      var raw = strip(B.chapters[it.ci].blocks[it.j].text||'');
+      var a = Math.max(0, p-45), b2 = Math.min(raw.length, p+v.length+70);
+      var snip = (a>0?'…':'') + esc(raw.slice(a,b2)) + (b2<raw.length?'…':'');
+      hits.push('<div data-ci="'+it.ci+'" data-j="'+it.j+'"><div class="rc">'
+        + esc(it.ch) + '</div>' + snip + '</div>');
+      n++;
+    }
+    results.innerHTML = hits.length ? hits.join('')
+      : '<div class="empty">没有匹配结果</div>';
+    results.classList.add('on');
+  }
+  q.addEventListener('input', runSearch);
+  q.addEventListener('keydown', function(e){ if(e.key==='Escape'){ q.value=''; runSearch(); q.blur(); }});
+  results.addEventListener('click', function(e){
+    var d = e.target.closest('div[data-ci]'); if(!d) return;
+    var i = +d.dataset.ci, j = +d.dataset.j;
+    results.classList.remove('on'); q.value='';
+    if(i !== cur) renderChapter(i, 'c'+i+'b'+j);
+    else { var el = document.getElementById('c'+i+'b'+j); if(el) el.scrollIntoView({block:'center'}); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === '/' && document.activeElement !== q){ e.preventDefault(); q.focus(); }
+  });
+
+  /* ---------- 章切换 ---------- */
+  function go(d){
+    var i = Math.min(B.chapters.length-1, Math.max(0, cur+d));
+    if(i!==cur) renderChapter(i);
+  }
+  document.getElementById('prevCh').onclick = function(){ go(-1); };
+  document.getElementById('nextCh').onclick = function(){ go(1); };
+  document.addEventListener('keydown', function(e){
+    if(document.activeElement === q) return;
+    if(e.key === 'ArrowLeft') go(-1);
+    if(e.key === 'ArrowRight') go(1);
+  });
+
+  var cur = 0;
+  try{ var s = localStorage.getItem('nmr.ch'); if(s!=null && +s < B.chapters.length) cur = +s; }catch(e){}
+  renderChapter(cur);
+})();
+</script>
+</body>
+</html>

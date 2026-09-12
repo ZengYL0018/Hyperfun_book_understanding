@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head><meta charset="utf-8"><title>dbg-selbar</title><link rel="stylesheet" href="app.css">
+<script>
+localStorage.clear();
+(function(){var raw=window.fetch.bind(window);window.fetch=function(u,o){
+  if(String(u).indexOf('api/state')>=0)return Promise.reject(new Error('dbg'));return raw(u,o);};})();
+</script></head>
+<body>
+<pre id="out" style="white-space:pre-wrap;font:12px monospace;background:#fff;padding:8px">booting</pre>
+<script>
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const loadScript = src => new Promise((res, rej) => {
+  const s = document.createElement('script'); s.src = src; s.onload = res;
+  s.onerror = () => rej(new Error('fail ' + src)); document.head.appendChild(s);
+});
+(async function () {
+  try {
+    const html = await window.fetch('index.html').then(r => r.text());
+    const d = new DOMParser().parseFromString(html, 'text/html');
+    Array.prototype.forEach.call(d.body.querySelectorAll('script'), s => s.remove());
+    const h = document.createElement('div'); h.innerHTML = d.body.innerHTML;
+    while (h.firstChild) document.body.appendChild(h.firstChild);
+    await loadScript('data.js'); await loadScript('glossary.js'); await loadScript('app.js');
+    await wait(1200);
+    const out = [];
+    const bar = document.getElementById('selbar');
+    /* 监视 class 变化 */
+    const mo = new MutationObserver(mrs => {
+      mrs.forEach(m => out.push('  [' + new Date().toISOString().slice(17, 23) + '] class → "' + m.target.className + '"'));
+    });
+    mo.observe(bar, { attributes: true, attributeFilter: ['class'] });
+
+    const p = document.querySelector('#article p');
+    const w = document.createTreeWalker(p, NodeFilter.SHOW_TEXT, null);
+    const tn = w.nextNode();
+    const r = document.createRange();
+    r.setStart(tn, 0); r.setEnd(tn, Math.min(42, tn.nodeValue.length));
+    const sel = window.getSelection();
+    sel.removeAllRanges(); sel.addRange(r);
+    out.push('1) 选区后 bar.className = "' + bar.className + '"');
+    await wait(400);
+    out.push('2) 等400ms后 = "' + bar.className + '"');
+    document.getElementById('doc').scrollTop += 90;
+    await wait(400);
+    out.push('3) 滚动90px后 = "' + bar.className + '"');
+    sel.removeAllRanges();
+    document.dispatchEvent(new Event('selectionchange'));
+    await wait(400);
+    out.push('4) 清选区+dispatch后 = "' + bar.className + '"');
+    out.push('pendingSelection quote 是否还在（从按钮行为推断，不直接读闭包）');
+    mo.disconnect();
+    document.getElementById('out').textContent = out.join('\n');
+  } catch (e) {
+    document.getElementById('out').textContent = 'CRASH: ' + (e && e.message);
+  }
+})();
+</script></body></html>

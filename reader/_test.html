@@ -59,6 +59,10 @@ window.__rawFetch('index.html').then(function (r) { return r.text(); }).then(fun
   return loadScript('data.js');
 }).then(function () {
   t('data: NMR_BOOK 存在', !!window.NMR_BOOK, window.NMR_BOOK ? window.NMR_BOOK.chapters.length + ' 章' : '');
+  return loadScript('glossary.js');
+}).then(function () {
+  t('glossary: 术语表已加载', (window.NMR_GLOSSARY || []).length >= 60,
+    (window.NMR_GLOSSARY || []).length + ' 条');
   return loadScript('app.js');
 }).then(function () {
   return wait(400);
@@ -101,6 +105,46 @@ function runTests() {
       (article.querySelector('figure .pglink') || {}).textContent);
     t('toc: 当前章展开小节', document.querySelectorAll('#toc-list .ch-sub a').length > 0,
       document.querySelectorAll('#toc-list .ch-sub a').length + ' 小节');
+    t('gloss: 正文已包覆术语', article.querySelectorAll('.gterm').length > 3,
+      article.querySelectorAll('.gterm').length + ' 处');
+    var gt0 = article.querySelector('.gterm');
+    t('gloss: 术语携带释义键', !!gt0 && !!gt0.dataset.term, gt0 ? gt0.dataset.term : '无');
+    t('fig-link: 正文含 Fig./Table 内链', article.querySelectorAll('a.inlink[data-ref]').length > 0,
+      article.querySelectorAll('a.inlink[data-ref]').length + ' 处');
+  });
+  steps.push(function () {
+    var gt = article.querySelector('.gterm');
+    if (gt) {
+      gt.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+    }
+    return wait(80);
+  });
+  steps.push(function () {
+    var card = document.getElementById('gcard');
+    t('gloss: 悬停弹出释义卡', card.classList.contains('on'));
+    t('gloss: 释义卡有中英与释义', !!card.querySelector('.gt b') && !!card.querySelector('.gd'),
+      (card.querySelector('.gt b') || {}).textContent);
+    document.getElementById('gcard').classList.remove('on');
+    document.querySelector('#side .tabs .tab[data-pane="gloss"]').click();
+    return wait(120);
+  });
+  steps.push(function () {
+    var items = document.querySelectorAll('#gloss-list .gloss-item');
+    t('gloss: 术语面板列出全部条目', items.length >= 60, items.length + ' 条');
+    document.querySelector('#side .tabs .tab[data-pane="gal"]').click();
+    return wait(260);
+  });
+  steps.push(function () {
+    var items = document.querySelectorAll('#gal-list .gal-item');
+    t('gallery: 图集缩略图墙', items.length > 200, items.length + ' 项');
+    var first = items[0];
+    if (first) first.click();
+    return wait(200);
+  });
+  steps.push(function () {
+    t('gallery: 点击直达原文并回跳目录', !!document.querySelector('#article h1'));
+    document.querySelector('#side .tabs .tab[data-pane="toc"]').click();
+    return wait(60);
   });
   steps.push(function () {
     document.querySelectorAll('#toc-list .ch-row')[7].click();
@@ -254,8 +298,31 @@ function runTests() {
     var bar = document.getElementById('selbar');
     t('highlight: 划词后浮出工具条', bar.classList.contains('on'));
     t('highlight: 工具条含 4 个颜色', bar.querySelectorAll('.dot').length === 4);
+    t('selbar: 默认固定', bar.classList.contains('pin'));
+    window.__selTop = bar.style.top;
+    var d = document.getElementById('doc');
+    d.scrollTop += 90;                       /* 选区还在时滚动 */
+    return wait(220);
+  });
+  steps.push(function () {
+    var bar = document.getElementById('selbar');
+    t('selbar: 滚动后工具条仍在', bar.classList.contains('on'));
+    t('selbar: 仍锚定在选区旁', typeof bar.style.top === 'string' && bar.style.top !== '',
+      bar.style.top);
+    /* 固定时清空选区，工具条也不该自动消失 */
+    try { window.getSelection().removeAllRanges(); } catch (e) { }
+    document.dispatchEvent(new Event('selectionchange'));
+    return wait(260);
+  });
+  steps.push(function () {
+    var bar = document.getElementById('selbar');
+    t('selbar: 固定时选区塌陷也不消失', bar.classList.contains('on'));
+    t('selbar: 图钉按钮存在', !!bar.querySelector('button[data-act="pin"]'));
     bar.querySelector('button[data-act="highlight"]').click();
     return wait(220);
+  });
+  steps.push(function () {
+    t('selbar: 执行动作后自动收起', !document.getElementById('selbar').classList.contains('on'));
   });
   steps.push(function () {
     var s = state();
@@ -367,6 +434,93 @@ function runTests() {
     t('reset: 笔记保留', (state().notes || []).length === 1, (state().notes || []).length + ' 条');
     t('reset: 回到第一章', document.querySelector('#article h1').textContent === 'Preface',
       document.querySelector('#article h1').textContent);
+  });
+
+  /* ---- 网页特有：分屏对照 / 命令面板 / 返回 / 排版 / 专注 / 统计 ---- */
+  steps.push(function () {
+    document.getElementById('btn-cmp').click();
+    return wait(500);
+  });
+  steps.push(function () {
+    t('cmp: 分屏已开启', document.body.classList.contains('compare-on'));
+    t('cmp: iframe 已指向原书', /book\.pdf#page=\d+/.test(document.getElementById('cmp-frame').src),
+      document.getElementById('cmp-frame').src.split('/').pop());
+    t('cmp: 页码标签已填充', document.getElementById('cmp-no').textContent !== '—',
+      document.getElementById('cmp-no').textContent);
+  });
+  steps.push(function () {
+    document.getElementById('btn-cmp').click();
+    document.getElementById('btn-zen').click();
+    return wait(80);
+  });
+  steps.push(function () {
+    t('cmp: 可关闭', !document.body.classList.contains('compare-on'));
+    t('zen: 专注模式生效', document.body.classList.contains('zen'));
+    document.getElementById('btn-zen').click();
+    return wait(60);
+  });
+  steps.push(function () {
+    t('zen: 专注模式可退出', !document.body.classList.contains('zen'));
+    // 排版设置
+    document.getElementById('btn-type').click();
+    return wait(60);
+  });
+  steps.push(function () {
+    var pop = document.getElementById('typepop');
+    t('type: 设置面板可打开', pop.classList.contains('on'));
+    var big = pop.querySelector('button[data-key="size"][data-val="19.5px"]');
+    if (big) big.click();
+    return wait(60);
+  });
+  steps.push(function () {
+    t('type: 字号写入并生效', document.documentElement.style.getPropertyValue('--read-size') === '19.5px',
+      document.documentElement.style.getPropertyValue('--read-size'));
+    document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    // 返回功能：跳到某章再 Backspace
+    document.querySelectorAll('#toc-list .ch-row')[3].click();
+    return wait(200);
+  });
+  steps.push(function () {
+    window.__backTitle = document.querySelector('#article h1').textContent;
+    var ev = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true });
+    document.dispatchEvent(ev);
+    return wait(220);
+  });
+  steps.push(function () {
+    t('back: Backspace 返回上一位置',
+      document.querySelector('#article h1').textContent !== window.__backTitle,
+      window.__backTitle + ' → ' + document.querySelector('#article h1').textContent);
+    // 命令面板
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }));
+    return wait(120);
+  });
+  steps.push(function () {
+    t('palette: Ctrl+K 打开', document.getElementById('palette').classList.contains('on'));
+    var q = document.getElementById('pal-q');
+    q.value = 'vector';
+    q.dispatchEvent(new Event('input', { bubbles: true }));
+    return wait(120);
+  });
+  steps.push(function () {
+    var rows = document.querySelectorAll('#pal-list .pal-item');
+    t('palette: 能筛选出目标', rows.length > 0, rows.length + ' 条');
+    t('palette: 分类标签存在', !!document.querySelector('#pal-list .pk'));
+    if (rows.length) rows[0].click();
+    return wait(200);
+  });
+  steps.push(function () {
+    t('palette: 选中后可跳转', !document.getElementById('palette').classList.contains('on') &&
+      !!document.querySelector('#article h1'));
+    // 统计
+    document.getElementById('ring').click();
+    return wait(160);
+  });
+  steps.push(function () {
+    t('stats: 打卡卡片存在', !!document.getElementById('stat-today'),
+      (document.getElementById('stat-today') || {}).textContent);
+    t('stats: 热力图已渲染', document.querySelectorAll('#pane-prog .hm i').length >= 70,
+      document.querySelectorAll('#pane-prog .hm i').length + ' 格');
+    t('anki: 导出按钮存在', !!document.querySelector('#pane-prog [data-act="anki"]'));
   });
 
   /* ---- 主题 / 章节导航 ---- */

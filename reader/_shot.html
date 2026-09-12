@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head><meta charset="utf-8"><title>shot harness</title><link rel="stylesheet" href="app.css">
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var theme = q.get('theme') || 'light';
+  document.documentElement.dataset.theme = theme;
+  localStorage.clear();
+  localStorage.setItem('nmr.reader.ui.v2', JSON.stringify({ theme: theme }));
+  var raw = window.fetch.bind(window);
+  window.fetch = function (u, o) {
+    if (String(u).indexOf('api/state') >= 0) return Promise.reject(new Error('shot-mode'));
+    return raw(u, o);
+  };
+})();
+</script></head>
+<body>
+<script>
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const loadScript = src => new Promise((res, rej) => {
+  const s = document.createElement('script'); s.src = src; s.onload = res;
+  s.onerror = () => rej(new Error('fail ' + src)); document.head.appendChild(s);
+});
+const Q = new URLSearchParams(location.search);
+
+(async function () {
+  try {
+    const html = await window.fetch('index.html').then(r => r.text());
+    const d = new DOMParser().parseFromString(html, 'text/html');
+    Array.prototype.forEach.call(d.body.querySelectorAll('script'), s => s.remove());
+    const h = document.createElement('div'); h.innerHTML = d.body.innerHTML;
+    while (h.firstChild) document.body.appendChild(h.firstChild);
+    await loadScript('data.js');
+    await loadScript('glossary.js');
+    await seed();
+    await loadScript('app.js');
+    await wait(600);
+    await drive();
+    await wait(500);
+  } catch (e) { document.title = 'ERR ' + e.message; }
+})();
+
+function seed() {
+  const B = window.NMR_BOOK;
+  const noteText = (ci, bi, len) => String(B.chapters[ci].blocks[bi].text || '').replace(/<[^>]+>/g, '').substr(0, len);
+  const N = [
+    { id: 'n1', chapter: 7, block: 3, page: B.chapters[7].blocks[3].page, start: 0, end: 58,
+      quote: noteText(7, 3, 58),
+      body: '矢量模型只在单自旋/弱耦合下直观，多自旋必须上 product operator。' },
+    { id: 'n2', chapter: 8, block: 22, page: B.chapters[8].blocks[22].page, start: 0, end: 44,
+      quote: noteText(8, 22, 44),
+      body: '两项 = 对 X 自旋在 y 方向观测；四项 = 反相（anti-phase）项。' }
+  ];
+  const BK = [
+    { id: 'b1', chapter: 7, block: 3, page: B.chapters[7].blocks[3].page, label: '6.1 Schrödinger 方程的物理图像', ratio: 0.1, created: '2026-09-08T21:10:00' },
+    { id: 'b2', chapter: 8, block: 22, page: B.chapters[8].blocks[22].page, label: '7.2.3 反相项从哪来', ratio: 0.3, created: '2026-09-10T22:40:00' }
+  ];
+  const PR = {};
+  ['0', '1', '2', '3', '4', '5', '6'].forEach(function (k) { PR[k] = { pct: 1, block: 0, ratio: 0, updated: '2026-09-09T20:00:00' }; });
+  PR['7'] = { pct: 0.62, block: 180, ratio: 0.62, updated: '2026-09-11T23:00:00' };
+  PR['8'] = { pct: 0.28, block: 90, ratio: 0.28, updated: '2026-09-11T23:10:00' };
+  const R = {};
+  for (let i = 0; i < 40; i++) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const k = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    if (i % 7 !== 3) R[k] = 600 + ((i * 137) % 1500);
+  }
+  localStorage.setItem('nmr.reader.state.v2', JSON.stringify({
+    progress: PR, bookmarks: BK, notes: N, meta: { reading: R }
+  }));
+  localStorage.setItem('nmr.reader.last', '7');
+}
+
+async function drive() {
+  const view = Q.get('view');
+  const click = sel => { const e = document.querySelector(sel); if (e) e.click(); };
+  if (view === 'compare') { click('#btn-cmp'); await wait(300); }
+  else if (view === 'palette') {
+    click('#btn-cmp'); await wait(200);   /* 分屏 + 面板一起看 */
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }));
+    await wait(150);
+    const q = document.getElementById('pal-q'); q.value = 'vector';
+    q.dispatchEvent(new Event('input', { bubbles: true }));
+    await wait(150);
+  } else if (view === 'gcard') {
+    document.querySelectorAll('#toc-list .ch-row')[7].click();
+    await wait(500);
+    const g = document.querySelectorAll('#article .gterm')[1] || document.querySelector('#article .gterm');
+    if (g) g.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+  } else if (view === 'gloss') { click('#side .tabs .tab[data-pane="gloss"]'); }
+  else if (view === 'gal') { click('#side .tabs .tab[data-pane="gal"]'); await wait(400); }
+  else if (view === 'stats') { click('#ring'); }
+  else if (view === 'zen') { document.body.classList.add('zen'); }
+  else if (view === 'type') { click('#btn-type'); }
+  return wait(60);
+}
+</script></body></html>

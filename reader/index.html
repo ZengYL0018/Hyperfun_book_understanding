@@ -65,11 +65,13 @@
   </header>
 
   <div id="body">
-    <!-- 左：目录 / 索引 -->
+    <!-- 左：目录 / 索引 / 术语 / 图集 -->
     <aside id="side">
       <div class="tabs">
         <button class="tab on" data-pane="toc">目录</button>
         <button class="tab" data-pane="index">索引</button>
+        <button class="tab" data-pane="gloss">术语</button>
+        <button class="tab" data-pane="gal">图集</button>
       </div>
 
       <div class="pane on" id="pane-toc">
@@ -87,17 +89,43 @@
         </div>
         <div id="idx-list" class="scroll"></div>
       </div>
+
+      <div class="pane" id="pane-gloss">
+        <div class="idx-tools">
+          <input id="gloss-q" type="search" placeholder="检索术语 / 释义…" autocomplete="off" aria-label="检索术语">
+          <div class="idx-hint"><span id="gloss-count"></span>中英对照 · 悬停正文术语也会弹出释义</div>
+        </div>
+        <div id="gloss-list" class="scroll"></div>
+      </div>
+
+      <div class="pane" id="pane-gal">
+        <div class="idx-tools">
+          <input id="gal-q" type="search" placeholder="筛选图注 / 编号（如 5.8）…" autocomplete="off" aria-label="筛选图集">
+          <div class="idx-hint"><span id="gal-count"></span>全书插图 · 点击直达原文</div>
+        </div>
+        <div id="gal-list" class="scroll gal-grid"></div>
+      </div>
     </aside>
 
     <!-- 中：正文 -->
     <main id="doc" class="scroll">
-      <div id="chapter-bar"><span class="crumb" id="crumb"></span><span class="pos" id="pos">0% 已读</span></div>
+      <div id="chapter-bar">
+        <button class="bar-btn" id="btn-back" disabled aria-label="返回上次位置"></button>
+        <span class="crumb" id="crumb"></span>
+        <span class="pos" id="pos">本章 0%</span>
+        <button class="bar-btn" id="btn-type" aria-label="排版设置"></button>
+        <button class="bar-btn" id="btn-cmp" aria-label="对照分屏"></button>
+        <button class="bar-btn" id="btn-zen" aria-label="专注模式"></button>
+      </div>
       <div id="doc-inner">
         <article id="article"></article>
         <div id="chap-foot"></div>
       </div>
       <div id="selbar" role="toolbar" aria-label="选中文字操作"></div>
     </main>
+
+    <!-- 对照分屏：原书对应页 -->
+    <section id="compare"></section>
 
     <!-- 右：进度 / 书签 / 笔记 -->
     <aside id="panel">
@@ -117,12 +145,27 @@
 </div>
 
 <div id="pager"></div>
+<div id="gcard" role="tooltip"></div>
+<div id="typepop"></div>
+<div id="palette">
+  <div class="pal-box">
+    <div class="pal-head">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="pal-q" type="text" placeholder="跳转到…" autocomplete="off" spellcheck="false" aria-label="命令面板">
+      <span id="pal-count"></span>
+    </div>
+    <div id="pal-list" class="scroll"></div>
+    <div class="pal-hint"><kbd>↑</kbd><kbd>↓</kbd> 选择 · <kbd>Enter</kbd> 跳转 · <kbd>Esc</kbd> 关闭</div>
+  </div>
+</div>
 <div id="zoom"><img id="zoomi" alt="放大查看"></div>
 <div id="modal"></div>
 <div id="toasts"></div>
 <div id="boot"><div><div class="sp"></div>正在载入全书数据…</div></div>
 
 <script src="data.js"></script>
+<script src="glossary.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
